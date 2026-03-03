@@ -1,1 +1,605 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مانهوا - الروح المغرية</title>
+    <!-- Font Awesome للأيقونات (اختياري لكنه مفيد) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* شريط التنبيه العلوي */
+        .top-alert {
+            background-color: #2a2a2a;
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            border-bottom: 1px solid #333;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-icon {
+            background-color: #ff4757;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .close-btn {
+            color: #888;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* الهيدر الرئيسي */
+        header {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .logo span {
+            color: #ff4757;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            background-color: #2a2a2a;
+            color: #fff;
+            font-size: 14px;
+            padding-right: 45px;
+        }
+
+        .search-bar i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-actions i {
+            font-size: 20px;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .user-actions i:hover {
+            color: #ff4757;
+        }
+
+        /* القائمة السفلية تحت الهيدر */
+        .nav-links {
+            background-color: #1a1a1a;
+            padding: 0 20px 10px 20px;
+            display: flex;
+            gap: 25px;
+            border-bottom: 1px solid #333;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #888;
+            text-decoration: none;
+            font-size: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #fff;
+            border-bottom-color: #ff4757;
+        }
+
+        /* المحتوى الرئيسي */
+        main {
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* قسم المانهوا الرئيسي */
+        .manga-details {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            background: linear-gradient(to bottom, #2a2a2a, #1f1f1f);
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .manga-cover {
+            flex: 0 0 250px;
+            position: relative;
+        }
+
+        .manga-cover img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .rating-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #ff4757;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .manga-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .manga-info h1 {
+            font-size: 32px;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .manga-info h2 {
+            font-size: 18px;
+            color: #888;
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+
+        .meta-tags {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .meta-tags span {
+            background-color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .description {
+            color: #bbb;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #ff4757;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff5e6b;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #ff4757;
+        }
+
+        .btn-secondary:hover {
+            background-color: #ff4757;
+        }
+
+        /* tabs التصنيفات */
+        .tabs {
+            display: flex;
+            gap: 30px;
+            border-bottom: 1px solid #333;
+            margin-bottom: 25px;
+        }
+
+        .tab {
+            color: #888;
+            cursor: pointer;
+            padding-bottom: 10px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: #fff;
+            border-bottom-color: #ff4757;
+        }
+
+        /* قائمة الفصول */
+        .chapters-list {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .chapter-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #333;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+
+        .chapter-item:hover {
+            background-color: #333;
+        }
+
+        .chapter-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chapter-left i {
+            color: #ff4757;
+        }
+
+        .chapter-date {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* توصيات */
+        .recommendations {
+            margin-top: 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .manga-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .manga-card {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .manga-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .manga-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .card-info {
+            padding: 12px;
+        }
+
+        .card-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .card-info p {
+            color: #ff4757;
+            font-size: 14px;
+        }
+
+        /* الفوتر */
+        footer {
+            background-color: #1a1a1a;
+            padding: 30px 20px;
+            border-top: 1px solid #333;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-icons i {
+            font-size: 20px;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .social-icons i:hover {
+            color: #ff4757;
+        }
+
+        /* للشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .logo-area {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .user-actions {
+                justify-content: center;
+            }
+            
+            .manga-details {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .meta-tags {
+                justify-content: center;
+            }
+            
+            .action-buttons {
+                justify-content: center;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنبيه العلوي -->
+    <div class="top-alert">
+        <div class="alert-content">
+            <span class="alert-icon"></span>
+            <span>⚠️ لا تنس متابعة الفصول الجديدة - تحديث يومي</span>
+        </div>
+        <span class="close-btn"><i class="fas fa-times"></i></span>
+    </div>
+
+    <!-- الهيدر -->
+    <header>
+        <div class="logo-area">
+            <div class="logo">مانهوا<span>لات</span></div>
+            <div class="search-bar">
+                <input type="text" placeholder="ابحث عن مانهوا...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="user-actions">
+                <i class="far fa-heart"></i>
+                <i class="far fa-bell"></i>
+                <i class="far fa-user-circle"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- روابط التصفح -->
+    <nav class="nav-links">
+        <a href="#" class="active">الرئيسية</a>
+        <a href="#">الفصول</a>
+        <a href="#">التصنيفات</a>
+        <a href="#">المفضلة</a>
+        <a href="#">الأحدث</a>
+        <a href="#">الأكثر قراءة</a>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <main>
+        <!-- تفاصيل المانهوا -->
+        <section class="manga-details">
+            <div class="manga-cover">
+                <!-- يمكنك تغيير رابط الصورة لأي صورة مانهوا تريدها -->
+                <img src="https://via.placeholder.com/250x350/2a2a2a/ff4757?text=RABINC" alt="الروح المغرية">
+                <div class="rating-badge">⭐ 4.8</div>
+            </div>
+            <div class="manga-info">
+                <h1>الروح المغرية</h1>
+                <h2>RABINC - The Seductive Soul</h2>
+                
+                <div class="meta-tags">
+                    <span>#دراما</span>
+                    <span>#رومانسي</span>
+                    <span>#فانتازيا</span>
+                    <span>#مكتمل</span>
+                </div>
+                
+                <p class="description">
+                    قصة فتاة تمتلك روحاً غامضة تجذب الجميع إليها، لكنها تبحث عن الحب الحقيقي في عالم مليء بالخداع. 
+                    مانهوا كورية مثيرة تجمع بين الرومانسية والتشويق في إطار فانتازي آسر.
+                </p>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary">📖 ابدأ القراءة</button>
+                    <button class="btn btn-secondary">➕ قائمة القراءة</button>
+                </div>
+                
+                <div class="meta-info">
+                    <p>📅 النشر: 2020 - 2024</p>
+                    <p>👤 المؤلف: Rabinc</p>
+                    <p>📁 الحالة: مكتملة (120 فصل)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- التبويبات -->
+        <div class="tabs">
+            <div class="tab active">الفصول</div>
+            <div class="tab">معلومات</div>
+            <div class="tab">تعليقات</div>
+            <div class="tab">مقترحات</div>
+        </div>
+
+        <!-- قائمة الفصول -->
+        <section class="chapters-list">
+            <div class="chapter-item">
+                <div class="chapter-left">
+                    <i class="fas fa-lock-open"></i>
+                    <span>الفصل 120: اللقاء الأخير</span>
+                </div>
+                <span class="chapter-date">منذ يومين</span>
+            </div>
+            <div class="chapter-item">
+                <div class="chapter-left">
+                    <i class="fas fa-lock-open"></i>
+                    <span>الفصل 119: سر الروح</span>
+                </div>
+                <span class="chapter-date">منذ 5 أيام</span>
+            </div>
+            <div class="chapter-item">
+                <div class="chapter-left">
+                    <i class="fas fa-lock-open"></i>
+                    <span>الفصل 118: اعتراف</span>
+                </div>
+                <span class="chapter-date">منذ أسبوع</span>
+            </div>
+            <div class="chapter-item">
+                <div class="chapter-left">
+                    <i class="fas fa-lock"></i>
+                    <span>الفصل 117: الحقيقة المرة</span>
+                </div>
+                <span class="chapter-date">منذ أسبوعين</span>
+            </div>
+            <div class="chapter-item">
+                <div class="chapter-left">
+                    <i class="fas fa-lock-open"></i>
+                    <span>الفصل 116: هروب</span>
+                </div>
+                <span class="chapter-date">منذ أسبوعين</span>
+            </div>
+        </section>
+
+        <!-- توصيات -->
+        <section class="recommendations">
+            <h3 class="section-title">قد يعجبك أيضاً</h3>
+            <div class="manga-grid">
+                <div class="manga-card">
+                    <img src="https://via.placeholder.com/180x250/2a2a2a/ff4757?text=Solo+Leveling" alt="Solo Leveling">
+                    <div class="card-info">
+                        <h4>Solo Leveling</h4>
+                        <p>⭐ 4.9</p>
+                    </div>
+                </div>
+                <div class="manga-card">
+                    <img src="https://via.placeholder.com/180x250/2a2a2a/ff4757?text=True+Beauty" alt="True Beauty">
+                    <div class="card-info">
+                        <h4>True Beauty</h4>
+                        <p>⭐ 4.7</p>
+                    </div>
+                </div>
+                <div class="manga-card">
+                    <img src="https://via.placeholder.com/180x250/2a2a2a/ff4757?text=The+Breaker" alt="The Breaker">
+                    <div class="card-info">
+                        <h4>The Breaker</h4>
+                        <p>⭐ 4.8</p>
+                    </div>
+                </div>
+                <div class="manga-card">
+                    <img src="https://via.placeholder.com/180x250/2a2a2a/ff4757?text=Noblesse" alt="Noblesse">
+                    <div class="card-info">
+                        <h4>Noblesse</h4>
+                        <p>⭐ 4.6</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="footer-content">
+            <p>© 2024 مانهولات - جميع الحقوق محفوظة</p>
+            <div class="social-icons">
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-discord"></i>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
