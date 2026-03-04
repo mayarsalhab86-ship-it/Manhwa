@@ -1,138 +1,743 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الروح العذراء - RABINC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-</div>
+        body {
+            background: linear-gradient(145deg, #0b0719 0%, #150e2b 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .top-alert {
+            background: linear-gradient(90deg, #00ffff, #00ff9d);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #0b0719;
+            font-weight: 700;
+            box-shadow: 0 4px 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-icon {
+            background-color: #0b0719;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .close-btn {
+            color: #0b0719;
+            cursor: pointer;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        header {
+            background: rgba(11, 7, 25, 0.95);
+            padding: 20px 30px;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #00ffff, #00ff9d, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            animation: gradientFlow 3s ease infinite;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 14px 25px;
+            border-radius: 40px;
+            border: none;
+            background-color: #1e1738;
+            color: #fff;
+            font-size: 15px;
+            padding-right: 50px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            transition: 0.3s;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .search-bar i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00ffff;
+            font-size: 18px;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .user-actions i {
+            font-size: 24px;
+            background: linear-gradient(135deg, #00ffff, #00ff9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .user-actions i:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 10px #00ffff);
+        }
+
+        .nav-links {
+            background: rgba(11, 7, 25, 0.95);
+            padding: 0 30px 15px 30px;
+            display: flex;
+            gap: 35px;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-links a {
+            background: linear-gradient(135deg, #00ffff, #00ff9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding-bottom: 8px;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00ffff, #00ff9d);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        main {
+            padding: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .manga-details {
+            display: flex;
+            gap: 50px;
+            margin-bottom: 40px;
+            background: rgba(30, 23, 56, 0.7);
+            padding: 35px;
+            border-radius: 25px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 255, 255, 0.1);
+        }
+
+        .manga-cover {
+            flex: 0 0 350px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .manga-cover:hover {
+            transform: translateY(-10px);
+        }
+
+        .manga-cover img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            border: 2px solid #00ffff;
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.3);
+            transition: 0.3s;
+        }
+
+        .rating-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #00ffff, #00ff9d);
+            color: #0b0719;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .manga-info h1 {
+            font-size: 48px;
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, #00ffff, #00ff9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .manga-info h2 {
+            font-size: 28px;
+            color: #ff3366;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 51, 102, 0.3);
+        }
+
+        .meta-tags {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .meta-tags span {
+            background: rgba(11, 7, 25, 0.7);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            color: #00ffff;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .description {
+            color: #d0d0ff;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            max-width: 650px;
+            font-size: 16px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00ffff, #00ff9d);
+            color: #0b0719;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 40px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            padding: 14px 40px;
+            border-radius: 40px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 255, 255, 0.1);
+            border-color: #00ff9d;
+            color: #00ff9d;
+            transform: translateY(-3px);
+        }
+
+        .btn-report {
+            background: transparent;
+            border: 2px solid #ff3366;
+            color: #ff3366;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-report:hover {
+            background: rgba(255, 51, 102, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .meta-info {
+            margin-top: 20px;
+            color: #00ffff;
+            line-height: 2;
+            font-size: 16px;
+        }
+
+        .meta-info p {
+            margin: 8px 0;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 50px;
+            border-bottom: 2px solid rgba(0, 255, 255, 0.2);
+            margin-bottom: 30px;
+            padding-bottom: 5px;
+        }
+
+        .tab {
+            background: linear-gradient(135deg, #00ffff, #00ff9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            padding-bottom: 12px;
+            border-bottom: 2px solid transparent;
+            font-weight: 700;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .tab:hover,
+        .tab.active {
+            border-bottom-color: #00ffff;
+        }
+
+        .chapters-list {
+            background: rgba(30, 23, 56, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .chapter-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 25px;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .chapter-item:hover {
+            background: rgba(0, 255, 255, 0.05);
+            transform: translateX(-5px);
+        }
+
+        .chapter-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .chapter-left i {
+            color: #00ffff;
+            font-size: 18px;
+        }
+
+        .chapter-left i.fa-lock {
+            color: #ff3366;
+        }
+
+        .chapter-date {
+            color: #00ff9d;
+            font-size: 14px;
+        }
+
+        .recommendations {
+            margin-top: 60px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #ffffff;
+            border-right: 5px solid #00ffff;
+            padding-right: 20px;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .manga-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .manga-card {
+            background: rgba(30, 23, 56, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.4s;
+            cursor: pointer;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .manga-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #00ffff;
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+        }
+
+        .manga-card img {
+            width: 100%;
+            height: 270px;
+            object-fit: cover;
+        }
+
+        .card-info {
+            padding: 15px;
+        }
+
+        .card-info h4 {
+            font-size: 17px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .card-info p {
+            color: #00ffff;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            background: rgba(30, 23, 56, 0.7);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #00ffff;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .page-btn:hover,
+        .page-btn.active {
+            background: linear-gradient(135deg, #00ffff, #00ff9d);
+            color: #0b0719;
+            border-color: transparent;
+            transform: scale(1.1);
+        }
+
+        footer {
+            background: rgba(11, 7, 25, 0.95);
+            padding: 40px 30px;
+            border-top: 2px solid rgba(0, 255, 255, 0.3);
+            margin-top: 60px;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            color: #00ffff;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 25px;
+        }
+
+        .social-icons i {
+            font-size: 24px;
+            background: linear-gradient(135deg, #00ffff, #00ff9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .social-icons i:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 10px #00ffff);
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.98);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .lightbox.show {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox img {
+            max-width: 95vw;
+            max-height: 95vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.3);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 10001;
+            background: rgba(0,0,0,0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover {
+            color: #ff3366;
+            transform: rotate(90deg);
+        }
+
+        .lightbox-download {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 10001;
+            background: rgba(0,0,0,0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-download:hover {
+            color: #00ffff;
+            transform: scale(1.1);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 10001;
+            background: rgba(0,0,0,0.5);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-nav:hover {
+            color: #00ffff;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .lightbox-nav.prev {
+            right: 20px;
+        }
+
+        .lightbox-nav.next {
+            left: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: white;
+            font-size: 16px;
+            background: rgba(0,0,0,0.7);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid #00ffff;
+            z-index: 10001;
+        }
+
+        @media (max-width: 768px) {
+            .manga-details {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .meta-tags {
+                justify-content: center;
+            }
+            
+            .description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .manga-cover {
+                flex: 0 0 auto;
+                max-width: 280px;
+                margin: 0 auto;
+            }
+
+            .lightbox-nav {
+                width: 45px;
+                height: 45px;
+                font-size: 30px;
+            }
+
+            .lightbox-close, .lightbox-download {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-alert">
+        <div class="alert-content">
+            <span class="alert-icon"></span>
+            <span>✨ الفصول الجديدة: الروح العذراء - متاحة الآن</span>
+        </div>
+        <span class="close-btn" onclick="this.parentElement.style.display='none'"><i class="fas fa-times"></i></span>
+    </div>
+
+    <header>
+        <div class="logo-area">
+            <div class="logo">RABINC</div>
+            <div class="search-bar">
+                <input type="text" placeholder="ابحث عن مانهوا...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="user-actions">
+                <i class="far fa-heart" onclick="alert('❤️ أضيف إلى المفضلة')"></i>
+                <i class="far fa-bookmark" onclick="alert('🔖 حفظ في قائمة القراءة')"></i>
+                <i class="far fa-user" onclick="alert('👤 مرحباً بك')"></i>
+            </div>
         </div>
     </header>
 
-    <main>
-
-        <section class="manga-details">
-            <div class="manga-cover" onclick="openLightbox(0)">
-                <img src="https://via.placeholder.com/350x500" alt="الروح العذراء">
-                <div class="rating-badge">9.5 ⭐</div>
-            </div>
-
-            <div class="manga-info">
-                <h1>الروح العذراء</h1>
-                <h2>RABINC Original</h2>
-
-                <div class="meta-tags">
-                    <span>أكشن</span>
-                    <span>خيال</span>
-                    <span>دراما</span>
-                </div>
-
-                <div class="description">
-                    قصة تدور حول عالم مليء بالأسرار، حيث تتقاطع الأرواح والقوى الغامضة في رحلة مصيرية لاكتشاف الحقيقة.
-                </div>
-
-                <div class="action-buttons">
-                    <button class="btn-primary">ابدأ القراءة</button>
-                    <button class="btn-secondary">أضف للمفضلة</button>
-                    <button class="btn-report">إبلاغ</button>
-                </div>
-
-                <div class="meta-info">
-                    <p>الحالة: مستمرة</p>
-                    <p>عدد الفصول: 25</p>
-                    <p>تاريخ الإضافة: 2026</p>
-                </div>
-            </div>
-        </section>
-
-        <div class="tabs">
-            <div class="tab active" onclick="switchTab(this)">الفصول</div>
-            <div class="tab" onclick="switchTab(this)">تعليقات</div>
-        </div>
-
-        <div class="chapters-list">
-            <div class="chapter-item">
-                <div class="chapter-left">
-                    <i class="fas fa-book-open"></i>
-                    <span>الفصل 1 - البداية</span>
-                </div>
-                <div class="chapter-date">2026-01-01</div>
-            </div>
-
-            <div class="chapter-item">
-                <div class="chapter-left">
-                    <i class="fas fa-book-open"></i>
-                    <span>الفصل 2 - المواجهة</span>
-                </div>
-                <div class="chapter-date">2026-01-10</div>
-            </div>
-
-            <div class="chapter-item">
-                <div class="chapter-left">
-                    <i class="fas fa-lock"></i>
-                    <span>الفصل 3 - قريباً</span>
-                </div>
-                <div class="chapter-date">مغلق</div>
-            </div>
-        </div>
-
-        <section class="recommendations">
-            <h3 class="section-title">أعمال مشابهة</h3>
-
-            <div class="manga-grid">
-                <div class="manga-card">
-                    <img src="https://via.placeholder.com/200x270" alt="">
-                    <div class="card-info">
-                        <h4>Shadow World</h4>
-                        <p>8.7 ⭐</p>
-                    </div>
-                </div>
-
-                <div class="manga-card">
-                    <img src="https://via.placeholder.com/200x270" alt="">
-                    <div class="card-info">
-                        <h4>Dark Legacy</h4>
-                        <p>9.1 ⭐</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div>© 2026 RABINC - جميع الحقوق محفوظة</div>
-
-            <div class="social-icons">
-                <i class="fab fa-facebook"></i>
-                <i class="fab fa-instagram"></i>
-                <i class="fab fa-discord"></i>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <div class="lightbox-content">
-            <span class="lightbox-close" onclick="closeLightbox()">×</span>
-            <img id="lightbox-img" src="">
-        </div>
-    </div>
-
-    <script>
-        function switchTab(element) {
-            document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
-            element.classList.add("active");
-        }
-
-        const images = [
-            "https://via.placeholder.com/800x1000"
-        ];
-
-        function openLightbox(index) {
-            document.getElementById("lightbox").classList.add("show");
-            document.getElementById("lightbox-img").src = images[index];
-        }
-
-        function closeLightbox() {
-            document.getElementById("lightbox").classList.remove("show");
-        }
-    </script>
-
-</body>
-</html>
+    <nav class="nav-links">
+        <a href="#" class="active">الرئيسية</a>
+        <a href="#" onclick="alert('📋 قائمة الفصول')">الفصول</a>
+        <a href="#" onclick="a
