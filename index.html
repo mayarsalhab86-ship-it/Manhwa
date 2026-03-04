@@ -19,6 +19,7 @@
             min-height: 100vh;
         }
 
+        /* شريط التنبيه العلوي */
         .top-alert {
             background: linear-gradient(90deg, #00ffff, #00ff9d);
             padding: 12px 20px;
@@ -63,6 +64,7 @@
             transform: scale(1.2);
         }
 
+        /* الهيدر */
         header {
             background: rgba(11, 7, 25, 0.95);
             padding: 20px 30px;
@@ -152,6 +154,7 @@
             filter: drop-shadow(0 0 10px #00ffff);
         }
 
+        /* القائمة */
         .nav-links {
             background: rgba(11, 7, 25, 0.95);
             padding: 0 30px 15px 30px;
@@ -196,6 +199,7 @@
             margin: 0 auto;
         }
 
+        /* قسم التفاصيل */
         .manga-details {
             display: flex;
             gap: 50px;
@@ -291,6 +295,11 @@
             margin-bottom: 25px;
         }
 
+        .btn-primary, .btn-secondary, .btn-report {
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
         .btn-primary {
             background: linear-gradient(135deg, #00ffff, #00ff9d);
             color: #0b0719;
@@ -299,8 +308,6 @@
             border-radius: 40px;
             font-size: 17px;
             font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
             box-shadow: 0 10px 25px rgba(0, 255, 255, 0.3);
         }
 
@@ -317,8 +324,6 @@
             border-radius: 40px;
             font-size: 17px;
             font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
         }
 
         .btn-secondary:hover {
@@ -336,8 +341,6 @@
             border-radius: 40px;
             font-size: 15px;
             font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
         }
 
         .btn-report:hover {
@@ -356,6 +359,7 @@
             margin: 8px 0;
         }
 
+        /* التبويبات */
         .tabs {
             display: flex;
             gap: 50px;
@@ -381,6 +385,7 @@
             border-bottom-color: #00ffff;
         }
 
+        /* قائمة الفصول */
         .chapters-list {
             background: rgba(30, 23, 56, 0.7);
             border-radius: 15px;
@@ -424,6 +429,7 @@
             font-size: 14px;
         }
 
+        /* التوصيات */
         .recommendations {
             margin-top: 60px;
         }
@@ -733,7 +739,7 @@
             <span class="alert-icon"></span>
             <span>✨ الفصول الجديدة: الروح العذراء - متاحة الآن</span>
         </div>
-        <span class="close-btn"><i class="fas fa-times"></i></span>
+        <span class="close-btn" onclick="this.parentElement.style.display='none'"><i class="fas fa-times"></i></span>
     </div>
 
     <header>
@@ -742,8 +748,4 @@
             <div class="search-bar">
                 <input type="text" placeholder="ابحث عن مانهوا...">
                 <i class="fas fa-search"></i>
-            </div>
-            <div class="user-actions">
-                <i class="far fa-heart"></i>
-                <i class="far fa-bookmark"></i>
-                <i class="f
+     
