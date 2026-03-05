@@ -63,29 +63,21 @@
         }
 
         .logo {
-            font-size: 32px;
+            font-size: 42px;
             font-weight: 900;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             display: flex;
             flex-direction: row;
             direction: ltr;
             cursor: pointer;
+            position: relative;
         }
 
         .logo span {
             display: inline-block;
-            animation: wave 2s ease-in-out infinite, colorChange 6s linear infinite;
+            transition: transform 0.5s ease, opacity 0.3s ease;
+            animation: colorChange 6s linear infinite;
             animation-delay: calc(0.1s * var(--i));
-            transition: transform 0.2s ease;
-        }
-
-        .logo:active span {
-            animation: jump 0.3s ease;
-        }
-
-        @keyframes wave {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
         }
 
         @keyframes colorChange {
@@ -98,11 +90,20 @@
             100% { color: #00ff00; }     /* أخضر */
         }
 
-        @keyframes jump {
-            0% { transform: translateY(0) scale(1); }
-            30% { transform: translateY(-20px) scale(1.1); }
-            70% { transform: translateY(5px) scale(0.95); }
-            100% { transform: translateY(0) scale(1); }
+        /* تأثير التناثر - كل حرف يطير في اتجاه */
+        .logo.scatter span {
+            animation: scatterLetter 0.8s ease forwards;
+        }
+
+        @keyframes scatterLetter {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x, 200px), var(--y, -150px)) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         .search-bar {
@@ -129,268 +130,4 @@
 
         .user-actions i {
             color: #00ffff;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .nav-links {
-            background: rgba(11, 7, 25, 0.8);
-            padding: 10px 15px;
-            display: flex;
-            gap: 20px;
-            border-bottom: 1px solid #00ffff;
-            overflow-x: auto;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .nav-links::-webkit-scrollbar {
-            display: none;
-        }
-
-        .nav-links a {
-            color: #00ffff;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        main {
-            max-width: 1300px;
-            margin: 15px auto;
-            padding: 15px;
-        }
-
-        .manga-details {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            background: rgba(30, 23, 56, 0.7);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid #00ffff;
-            backdrop-filter: blur(10px);
-        }
-
-        .manga-cover {
-            width: 100%;
-            max-width: 280px;
-            height: 350px;
-            background: #1e1738;
-            border-radius: 15px;
-            border: 2px solid #00ffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #00ffff;
-            font-size: 16px;
-            margin: 0 auto;
-        }
-
-        .manga-info {
-            text-align: center;
-        }
-
-        .manga-info h1 {
-            font-size: 36px;
-            background: linear-gradient(135deg, #00ffff, #00ff9d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .manga-info h2 {
-            color: #a020f0;
-            font-size: 24px;
-            margin: 10px 0;
-        }
-
-        .rating-badge {
-            background: #00ffff;
-            color: #0b0719;
-            padding: 5px 15px;
-            border-radius: 20px;
-            display: inline-block;
-            margin: 10px 0;
-            font-size: 14px;
-        }
-
-        .description {
-            color: #ccc;
-            margin: 15px 0;
-            line-height: 1.6;
-            font-size: 14px;
-        }
-
-        .action-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .btn-primary, .btn-outline {
-            width: 100%;
-            padding: 12px;
-            border-radius: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #00ffff, #00ff9d);
-            color: #0b0719;
-            border: none;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #00ffff;
-            color: #00ffff;
-        }
-
-        .chapters-list {
-            margin-top: 30px;
-        }
-
-        .chapters-list h3 {
-            color: #00ffff;
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-
-        .chapter-item {
-            background: rgba(30, 23, 56, 0.7);
-            padding: 15px;
-            margin: 5px 0;
-            border-radius: 10px;
-            border: 1px solid #00ffff;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .chapter-title {
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .chapter-date {
-            color: #00ff9d;
-            font-size: 13px;
-        }
-
-        footer {
-            background: rgba(11, 7, 25, 0.8);
-            padding: 20px;
-            text-align: center;
-            border-top: 2px solid #00ffff;
-            margin-top: 30px;
-            font-size: 14px;
-        }
-
-        /* تحسينات للشاشات الأصغر */
-        @media (min-width: 480px) {
-            .logo { font-size: 36px; }
-            .manga-details { flex-direction: row; text-align: right; }
-            .manga-info { text-align: right; }
-            .action-buttons { flex-direction: row; }
-            .btn-primary, .btn-outline { width: auto; }
-            .chapter-item { flex-direction: row; align-items: center; }
-        }
-
-        @media (min-width: 768px) {
-            .logo { font-size: 42px; }
-            .manga-cover { max-width: 300px; height: 400px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="top-alert">
-        <span>✨ الفصول الجديدة: الروح العذراء</span>
-        <span class="close-btn" onclick="this.parentElement.style.display='none'">✖</span>
-    </div>
-
-    <header>
-        <div class="logo-area">
-            <div class="logo" onclick="this.classList.add('jump'); setTimeout(() => this.classList.remove('jump'), 300);">
-                <span style="--i:1;">R</span>
-                <span style="--i:2;">A</span>
-                <span style="--i:3;">B</span>
-                <span style="--i:4;">I</span>
-                <span style="--i:5;">N</span>
-                <span style="--i:6;">C</span>
-            </div>
-            <div class="search-bar">
-                <input type="text" placeholder="بحث...">
-            </div>
-            <div class="user-actions">
-                <i class="far fa-heart"></i>
-                <i class="far fa-bookmark"></i>
-                <i class="far fa-user"></i>
-            </div>
-        </div>
-    </header>
-
-    <nav class="nav-links">
-        <a href="#" class="active">الرئيسية</a>
-        <a href="#">الفصول</a>
-        <a href="#">التصنيفات</a>
-        <a href="#">المفضلة</a>
-        <a href="#">الأحدث</a>
-    </nav>
-
-    <main>
-        <section class="manga-details">
-            <div class="manga-cover">
-                <span>⚠️ أضف الصورة</span>
-            </div>
-            <div class="manga-info">
-                <h1>RABINC</h1>
-                <h2>الروح العذراء</h2>
-                <div class="rating-badge">4.9 ★</div>
-                <p class="description">
-                    طالبة بشرية لا تمتلك عذرية نسل، حيث اختلطت جيناتها البشرية مع العذراء.<br>
-                    في يوم ما، حصلت على طاقة وأصبحت عذراء مثل سلالتها،<br>
-                    وأصبحت محاربة هدفها حماية البشر.
-                </p>
-                <div class="action-buttons">
-                    <button class="btn-primary" onclick="alert('انتظر الصور الجديدة')">📖 ابدأ القراءة</button>
-                    <button class="btn-outline" onclick="alert('تمت الإضافة')">➕ قائمة القراءة</button>
-                </div>
-            </div>
-        </section>
-
-        <div class="chapters-list">
-            <h3>الفصول</h3>
-            <div class="chapter-item" onclick="alert('انتظر الصور الجديدة')">
-                <span class="chapter-title">📖 الفصل 124: الروح العذراء</span>
-                <span class="chapter-date">منذ ساعتين</span>
-            </div>
-            <div class="chapter-item" onclick="alert('انتظر الصور الجديدة')">
-                <span class="chapter-title">📖 الفصل 123: اللقاء الأخير</span>
-                <span class="chapter-date">منذ يوم</span>
-            </div>
-            <div class="chapter-item" onclick="alert('انتظر الصور الجديدة')">
-                <span class="chapter-title">📖 الفصل 122: سر الماضي</span>
-                <span class="chapter-date">منذ 3 أيام</span>
-            </div>
-            <div class="chapter-item" onclick="alert('انتظر الصور الجديدة')">
-                <span class="chapter-title">📖 الفصل 121: الحقيقة</span>
-                <span class="chapter-date">منذ 5 أيام</span>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <p>© 2024 RABINC - جميع الحقوق محفوظة</p>
-    </footer>
-
-    <script>
-        document.querySelector('.logo').addEventListener('click', function() {
-            this.classList.add('jump');
-            setTimeout(() => this.classList.remove('jump'), 300);
-        });
-    </script>
-</body>
-</html>
+            font
