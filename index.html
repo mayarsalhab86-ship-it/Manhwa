@@ -1,420 +1,602 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>الروح العذراء - RABINC</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>الروح العذراء - RABINC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-        body {
-            background: linear-gradient(-45deg, #0b0719, #1e1245, #2a1b5e, #150e2b);
-            background-size: 300% 300%;
-            animation: moveBackground 12s ease infinite;
-            color: #ffffff;
-            min-height: 100vh;
-        }
+        body {
+            /* Smooth background animation with a gradient that hints at 3D depth */
+            background: radial-gradient(circle at center, #2a1b5e, #1e1245, #0b0719);
+            background-size: 200% 200%;
+            animation: backgroundShift 20s infinite alternate ease-in-out;
+            color: #ffffff;
+            min-height: 100vh;
+            perspective: 1500px; /* Enable 3D perspective for the entire body */
+            overflow-x: hidden; /* Prevent horizontal scroll from 3D effects */
+        }
 
-        @keyframes moveBackground {
+        @keyframes backgroundShift {
             0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
 
-        .top-alert {
-            background: linear-gradient(90deg, #00ffff, #00ff9d);
-            padding: 12px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #0b0719;
-            font-weight: bold;
-            font-size: 14px;
+        /* Subtle floating particles for a 'depth' effect */
+        .particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .particle {
+            position: absolute;
+            background: rgba(0, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
         }
 
-        .close-btn {
-            cursor: pointer;
-            font-size: 18px;
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
         }
 
-        header {
-            background: rgba(11, 7, 25, 0.8);
-            padding: 15px;
-            border-bottom: 1px solid #00ffff;
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-width: 1300px;
-            margin: 0 auto;
-            gap: 10px;
-        }
-
-        .logo {
-            font-size: 42px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            display: flex;
-            flex-direction: row;
-            direction: ltr;
-            cursor: pointer;
+        .top-alert {
+            background: linear-gradient(90deg, #00ffff, #00ff9d);
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #0b0719;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
             position: relative;
-        }
+            z-index: 101; /* Above sticky header */
+        }
 
-        .logo span {
-            display: inline-block;
-            transition: transform 0.5s ease, opacity 0.3s ease;
-            animation: colorChange 6s linear infinite;
-            animation-delay: calc(0.1s * var(--i));
-        }
+        .close-btn {
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+        .close-btn:hover { transform: rotate(90deg) scale(1.2); }
 
-        @keyframes colorChange {
-            0% { color: #00ff00; }
-            16% { color: #a020f0; }
-            32% { color: #000000; }
-            48% { color: #ff0000; }
-            64% { color: #0000ff; }
-            80% { color: #ff69b4; }
-            100% { color: #00ff00; }
-        }
+        header {
+            background: rgba(11, 7, 25, 0.9);
+            padding: 15px;
+            border-bottom: 2px solid #00ffff;
+            backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            /* Add a 3D-like 'float' effect to the header on scroll (needs JS for full effect, keeping it simple here) */
+            transition: transform 0.3s ease;
+        }
 
-        .logo.scatter span {
-            animation: scatterRandom 0.8s ease forwards;
-        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1300px;
+            margin: 0 auto;
+            gap: 15px;
+        }
 
-        @keyframes scatterRandom {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(var(--x, 150px), var(--y, 200px)) rotate(360deg);
-                opacity: 0;
-            }
-        }
+        .logo {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            display: flex;
+            flex-direction: row;
+            direction: ltr;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d; /* Keep children in 3D space */
+        }
 
-        .search-bar {
-            flex: 1;
-            max-width: 400px;
+        .logo span {
+            display: inline-block;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            animation: colorChange 8s linear infinite alternate;
+            animation-delay: calc(0.15s * var(--i));
             position: relative;
+            /* Create a faux-3D depth for letters */
+            text-shadow: 
+                1px 1px 0px rgba(0,255,255, 0.7),
+                2px 2px 0px rgba(0,255,255, 0.5),
+                3px 3px 0px rgba(0,255,255, 0.3);
+        }
+
+        /* Adjusted color changes for better aesthetics */
+        @keyframes colorChange {
+            0% { color: #00ffff; } /* Neon Cyan */
+            25% { color: #00ff9d; } /* Neon Green */
+            50% { color: #a020f0; } /* Purple */
+            75% { color: #ff00ff; } /* Magenta */
+            100% { color: #00ffff; }
+        }
+
+        .logo.scatter span {
+            /* Use translateZ to bring letters forward in 3D space during scatter */
+            animation: scatterRandom3D 1s ease forwards;
+            text-shadow: none; /* Hide shadow during scatter */
+        }
+
+        @keyframes scatterRandom3D {
+            0% {
+                transform: translate(0, 0) translateZ(0px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                /* Add significant Z translation and rotation for dramatic 3D effect */
+                transform: translate(var(--x, 150px), var(--y, 200px)) translateZ(200px) rotateX(360deg) rotateY(360deg) rotateZ(var(--rotate, 720deg));
+                opacity: 0;
+            }
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            background: #1e1738;
+            color: white;
+            border: 2px solid #00ffff;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .search-bar input:focus {
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+            border-color: #00ff9d;
+            transform: translateZ(10px); /* Subtle 3D lift on focus */
         }
 
-        .search-bar input {
-            width: 100%;
-            padding: 10px 15px;
-            border-radius: 30px;
-            border: none;
-            background: #1e1738;
-            color: white;
-            border: 1px solid #00ffff;
-            font-size: 14px;
-        }
+        .user-actions {
+            display: flex;
+            gap: 20px;
+            transform-style: preserve-3d;
+        }
 
-        .user-actions {
-            display: flex;
-            gap: 15px;
-        }
-
-        .user-actions i {
-            color: #00ffff;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .nav-links {
-            background: rgba(11, 7, 25, 0.8);
-            padding: 10px 15px;
-            display: flex;
-            gap: 20px;
-            border-bottom: 1px solid #00ffff;
-            overflow-x: auto;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .nav-links::-webkit-scrollbar {
-            display: none;
-        }
-
-        .nav-links a {
-            color: #00ffff;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        main {
-            max-width: 1300px;
-            margin: 15px auto;
-            padding: 15px;
-        }
-
-        .manga-details {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            background: rgba(30, 23, 56, 0.7);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid #00ffff;
-            backdrop-filter: blur(10px);
-        }
-
-        .manga-cover {
-            width: 100%;
-            max-width: 280px;
-            height: 350px;
-            background: #1e1738;
-            border-radius: 15px;
-            border: 2px solid #00ffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #00ffff;
-            font-size: 16px;
-            margin: 0 auto;
-        }
-
-        .manga-info {
-            text-align: center;
-        }
-
-        .manga-info h1 {
-            font-size: 36px;
-            background: linear-gradient(135deg, #00ffff, #00ff9d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .manga-info h2 {
-            color: #a020f0;
-            font-size: 24px;
-            margin: 10px 0;
-        }
-
-        .rating-badge {
-            background: #00ffff;
-            color: #0b0719;
-            padding: 5px 15px;
-            border-radius: 20px;
-            display: inline-block;
-            margin: 10px 0;
-            font-size: 14px;
-        }
-
-        .description {
-            color: #ccc;
-            margin: 15px 0;
-            line-height: 1.6;
-            font-size: 14px;
-        }
-
-        .action-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .btn-primary, .btn-outline {
-            width: 100%;
-            padding: 12px;
-            border-radius: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #00ffff, #00ff9d);
-            color: #0b0719;
-            border: none;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #00ffff;
-            color: #00ffff;
-        }
-
-        .chapters-list {
-            margin-top: 30px;
-        }
-
-        .chapters-list h3 {
-            color: #00ffff;
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-
-        .chapter-item {
-            background: rgba(30, 23, 56, 0.7);
-            padding: 15px;
-            margin: 5px 0;
-            border-radius: 10px;
-            border: 1px solid #00ffff;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .chapter-title {
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .chapter-date {
+        .user-actions i {
+            color: #00ffff;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
+        .user-actions i:hover {
             color: #00ff9d;
-            font-size: 13px;
+            transform: scale(1.2) translateZ(15px); /* Lift and scale in 3D */
+            text-shadow: 0 0 15px rgba(0, 255, 157, 0.8);
         }
 
-        footer {
-            background: rgba(11, 7, 25, 0.8);
-            padding: 20px;
-            text-align: center;
-            border-top: 2px solid #00ffff;
-            margin-top: 30px;
-            font-size: 14px;
+        .nav-links {
+            background: rgba(11, 7, 25, 0.9);
+            padding: 12px 15px;
+            display: flex;
+            gap: 25px;
+            border-bottom: 2px solid #00ffff;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            transform-style: preserve-3d;
+        }
+
+        .nav-links::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-links a {
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #00ff9d;
+            transform: scale(1.1) translateZ(10px);
+            text-shadow: 0 0 10px rgba(0, 255, 157, 0.7);
         }
 
-        @media (min-width: 480px) {
-            .logo { font-size: 36px; }
-            .manga-details { flex-direction: row; text-align: right; }
-            .manga-info { text-align: right; }
-            .action-buttons { flex-direction: row; }
-            .btn-primary, .btn-outline { width: auto; }
-            .chapter-item { flex-direction: row; align-items: center; }
+        main {
+            max-width: 1300px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .manga-details {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            background: rgba(30, 23, 56, 0.7);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid #00ffff;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6), inset 0 0 20px rgba(0,255,255,0.1);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease; /* Hover rotation effect */
+        }
+        /* Add a 3D tilt effect on hover for the details card */
+        .manga-details:hover {
+            transform: rotateX(5deg) rotateY(-3deg) translateZ(10px);
         }
 
-        @media (min-width: 768px) {
-            .logo { font-size: 42px; }
-            .manga-cover { max-width: 300px; height: 400px; }
+        .manga-cover {
+            width: 100%;
+            max-width: 320px;
+            height: 420px;
+            background: linear-gradient(135deg, #1e1738, #2a1b5e);
+            border-radius: 20px;
+            border: 3px solid #00ffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00ffff;
+            font-size: 18px;
+            margin: 0 auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        /* Add a subtle shine effect on hover */
+        .manga-cover::after {
+            content: '';
+            position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: all 0.5s ease;
         }
-    </style>
+        .manga-cover:hover {
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.6);
+            transform: scale(1.03) translateZ(20px) rotateY(-5deg); /* Slight lift and rotate on cover hover */
+        }
+        .manga-cover:hover::after { left: 100%; }
+
+        .manga-info {
+            text-align: center;
+            transform-style: preserve-3d;
+        }
+
+        .manga-info h1 {
+            font-size: 44px;
+            background: linear-gradient(135deg, #00ffff, #00ff9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 5px rgba(0, 255, 255, 0.4);
+            transform: translateZ(30px); /* Make title stand out most in 3D */
+        }
+
+        .manga-info h2 {
+            color: #a020f0;
+            font-size: 28px;
+            margin: 12px 0;
+            text-shadow: 1px 1px 3px rgba(160, 32, 240, 0.5);
+            transform: translateZ(20px);
+        }
+
+        .rating-badge {
+            background: linear-gradient(90deg, #00ffff, #00ff9d);
+            color: #0b0719;
+            padding: 7px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin: 12px 0;
+            font-size: 15px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 255, 255, 0.3);
+            transform: translateZ(25px);
+        }
+
+        .description {
+            color: #ddd;
+            margin: 20px 0;
+            line-height: 1.8;
+            font-size: 15px;
+            text-align: justify;
+            transform: translateZ(10px);
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+            transform-style: preserve-3d;
+        }
+
+        .btn-primary, .btn-outline {
+            width: 100%;
+            padding: 14px 25px;
+            border-radius: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 17px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00ffff, #00ff9d);
+            color: #0b0719;
+            border: none;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 8px 25px rgba(0, 255, 255, 0.6);
+            transform: translateY(-3px) translateZ(15px); /* Lift in 3D */
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #00ffff;
+            color: #00ffff;
+        }
+        .btn-outline:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 255, 255, 0.4);
+            transform: translateY(-3px) translateZ(15px);
+        }
+
+        .chapters-list {
+            margin-top: 40px;
+            transform-style: preserve-3d;
+        }
+
+        .chapters-list h3 {
+            color: #00ffff;
+            font-size: 26px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            transform: translateZ(10px);
+        }
+
+        .chapter-item {
+            background: rgba(30, 23, 56, 0.6);
+            padding: 18px 25px;
+            margin: 8px 0;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .chapter-item:hover {
+            background: rgba(30, 23, 56, 0.9);
+            border-color: #00ffff;
+            transform: scale(1.02) translateZ(15px) rotateX(-2deg); /* 3D effect on item hover */
+            box-shadow: 0 8px 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .chapter-title {
+            font-size: 18px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            transform: translateZ(10px);
+        }
+        .chapter-item:hover .chapter-title { color: #00ff9d; }
+
+        .chapter-date {
+            color: #ccc;
+            font-size: 14px;
+            transform: translateZ(5px);
+            transition: color 0.3s ease;
+        }
+        .chapter-item:hover .chapter-date { color: #fff; }
+
+        footer {
+            background: rgba(11, 7, 25, 0.9);
+            padding: 25px;
+            text-align: center;
+            border-top: 3px solid #00ffff;
+            margin-top: 40px;
+            font-size: 15px;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.4);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Media Queries for better responsiveness and refined 3D effects on larger screens */
+        @media (min-width: 480px) {
+            .logo { font-size: 40px; }
+            .manga-details { flex-direction: row; text-align: right; }
+            .manga-info { text-align: right; }
+            .action-buttons { flex-direction: row; gap: 15px; }
+            .btn-primary, .btn-outline { width: auto; flex: 1; }
+            .chapter-item { flex-direction: row; align-items: center; justify-content: space-between; }
+        }
+
+        @media (min-width: 768px) {
+            .logo { font-size: 48px; }
+            .manga-cover { max-width: 340px; height: 450px; }
+            .manga-info h1 { font-size: 52px; }
+            .manga-info h2 { font-size: 32px; }
+            .description { font-size: 16px; }
+        }
+
+        @media (min-width: 1024px) {
+            body { perspective: 2000px; } /* Deeper perspective for larger screens */
+            .manga-details:hover { transform: rotateX(8deg) rotateY(-5deg) translateZ(15px); }
+            .chapter-item:hover { transform: scale(1.03) translateZ(20px) rotateX(-3deg); }
+        }
+    </style>
 </head>
 <body>
-    <div class="top-alert">
-        <span>✨ الفصول الجديدة: الروح العذراء</span>
-        <span class="close-btn" onclick="this.parentElement.style.display='none'">✖</span>
-    </div>
+    <!-- Floating background particles -->
+    <div class="particles" id="particleContainer"></div>
 
-    <header>
-        <div class="logo-area">
-            <div class="logo" id="rabincLogo">
-                <span style="--i:1;">R</span>
-                <span style="--i:2;">A</span>
-                <span style="--i:3;">B</span>
-                <span style="--i:4;">I</span>
-                <span style="--i:5;">N</span>
-                <span style="--i:6;">C</span>
-            </div>
-            <div class="search-bar">
-                <input type="text" placeholder="بحث...">
-            </div>
-            <div class="user-actions">
-                <i class="far fa-heart"></i>
-                <i class="far fa-bookmark"></i>
-                <i class="far fa-user"></i>
-            </div>
-        </div>
-    </header>
+    <div class="top-alert">
+        <span>✨ الفصول الجديدة: الروح العذراء</span>
+        <span class="close-btn" onclick="this.parentElement.style.display='none'">✖</span>
+    </div>
 
-    <nav class="nav-links">
-        <a href="#" class="active">الرئيسية</a>
-        <a href="#">الفصول</a>
-        <a href="#">التصنيفات</a>
-        <a href="#">المفضلة</a>
-        <a href="#">الأحدث</a>
-    </nav>
+    <header id="mainHeader">
+        <div class="logo-area">
+            <div class="logo" id="rabincLogo">
+                <span style="--i:1;">R</span>
+                <span style="--i:2;">A</span>
+                <span style="--i:3;">B</span>
+                <span style="--i:4;">I</span>
+                <span style="--i:5;">N</span>
+                <span style="--i:6;">C</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="بحث عن مانجا...">
+            </div>
+            <div class="user-actions">
+                <i class="far fa-heart" title="المفضلة"></i>
+                <i class="far fa-bookmark" title="العلامات المرجعية"></i>
+                <i class="far fa-user" title="حسابي"></i>
+            </div>
+        </div>
+    </header>
 
-    <main>
-        <section class="manga-details">
-            <div class="manga-cover">
-                <span>⚠️ أضف الصورة</span>
-            </div>
-            <div class="manga-info">
-                <h1>RABINC</h1>
-                <h2>الروح العذراء</h2>
-                <div class="rating-badge">4.9 ★</div>
-                <p class="description">
-                    طالبة بشرية لا تمتلك عذرية نسل، حيث اختلطت جيناتها البشرية مع العذراء.<br>
-                    في يوم ما، حصلت على طاقة وأصبحت عذراء مثل سلالتها،<br>
-                    وأصبحت محاربة هدفها حماية البشر.
-                </p>
-                <div class="action-buttons">
-                    <button class="btn-primary" onclick="alert('انتظر الصور الجديدة')">📖 ابدأ القراءة</button>
-                    <button class="btn-outline" onclick="alert('تمت الإضافة')">➕ قائمة القراءة</button>
-                </div>
-            </div>
-        </section>
+    <nav class="nav-links">
+        <a href="#" class="active">الرئيسية</a>
+        <a href="#">الفصول</a>
+        <a href="#">التصنيفات</a>
+        <a href="#">المفضلة</a>
+        <a href="#">الأحدث</a>
+    </nav>
 
-        <div class="chapters-list">
-            <h3>الفصول</h3>
-            <div class="chapter-item" onclick="alert('انتظر الصور الجديدة')">
-                <span class="chapter-title">📖 الفصل 124: الروح العذراء</span>
-                <span class="chapter-date">منذ ساعتين</span>
-            </div>
-            <div class="chapter-item" onclick="alert('انتظر الصور الجديدة')">
-                <span class="chapter-title">📖 الفصل 123: اللقاء الأخير</span>
-                <span class="chapter-date">منذ يوم</span>
-            </div>
-            <div class="chapter-item" onclick="alert('انتظر الصور الجديدة')">
-                <span class="chapter-title">📖 الفصل 122: سر الماضي</span>
-                <span class="chapter-date">منذ 3 أيام</span>
-            </div>
-            <div class="chapter-item" onclick="alert('انتظر الصور الجديدة')">
-                <span class="chapter-title">📖 الفصل 121: الحقيقة</span>
-                <span class="chapter-date">منذ 5 أيام</span>
-            </div>
-        </div>
-    </main>
+    <main>
+        <section class="manga-details">
+            <div class="manga-cover">
+                <span>⚠️ أضف غلاف المانجا</span>
+            </div>
+            <div class="manga-info">
+                <h1>RABINC</h1>
+                <h2>الروح العذراء</h2>
+                <div class="rating-badge">4.9 ★ (بناءً على 1245 تقييم)</div>
+                <p class="description">
+                    طالبة بشرية لا تمتلك عذرية نسل، حيث اختلطت جيناتها البشرية مع العذراء.<br>
+                    في يوم ما، حصلت على طاقة وأصبحت عذراء مثل سلالتها،<br>
+                    وأصبحت محاربة هدفها حماية البشر من قوى الظلام التي تهدد وجودهم.
+                </p>
+                <div class="action-buttons">
+                    <button class="btn-primary" onclick="alert('انتظر الصور الجديدة للفصل الأول!')">📖 ابدأ القراءة</button>
+                    <button class="btn-outline" onclick="alert('تمت إضافة المانجا إلى قائمة القراءة الخاصة بك.')">➕ قائمة القراءة</button>
+                </div>
+            </div>
+        </section>
 
-    <footer>
-        <p>© 2024 RABINC - جميع الحقوق محفوظة</p>
-    </footer>
+        <div class="chapters-list">
+            <h3>الفصول (الأحدث أولاً)</h3>
+            <div class="chapter-item" onclick="alert('انتظر الصور الجديدة لهذا الفصل')">
+                <span class="chapter-title">📖 الفصل 124: الروح العذراء</span>
+                <span class="chapter-date">منذ ساعتين</span>
+            </div>
+            <div class="chapter-item" onclick="alert('انتظر الصور الجديدة لهذا الفصل')">
+                <span class="chapter-title">📖 الفصل 123: اللقاء الأخير</span>
+                <span class="chapter-date">منذ يوم</span>
+            </div>
+            <div class="chapter-item" onclick="alert('انتظر الصور الجديدة لهذا الفصل')">
+                <span class="chapter-title">📖 الفصل 122: سر الماضي العميق</span>
+                <span class="chapter-date">منذ 3 أيام</span>
+            </div>
+            <div class="chapter-item" onclick="alert('انتظر الصور الجديدة لهذا الفصل')">
+                <span class="chapter-title">📖 الفصل 121: الحقيقة المؤلمة</span>
+                <span class="chapter-date">منذ 5 أيام</span>
+            </div>
+        </div>
+    </main>
 
-    <script>
-        const logo = document.getElementById('rabincLogo');
-        const letters = logo.querySelectorAll('span');
+    <footer>
+        <p>© 2024 RABINC Manga Store - جميع الحقوق محفوظة</p>
+        <p style="font-size: 12px; color: #aaa; margin-top: 5px;">تصميم وتطوير بدقة عالية</p>
+    </footer>
 
-        function scatterLetters() {
-            if (logo.classList.contains('scatter')) return;
+    <script>
+        // Existing Logo Scatter Effect (Enhanced)
+        const logo = document.getElementById('rabincLogo');
+        const letters = logo.querySelectorAll('span');
 
-            letters.forEach(letter => {
-                const randomX = (Math.random() * 400 - 200).toFixed(0);
-                const randomY = (Math.random() * 300 + 100).toFixed(0);
-                const randomRotate = Math.random() * 720 - 360;
+        function scatterLetters() {
+            if (logo.classList.contains('scatter')) return;
+
+            letters.forEach(letter => {
+                // Larger scatter range and more rotation for 3D effect
+                const randomX = (Math.random() * 600 - 300).toFixed(0);
+                const randomY = (Math.random() * 400 + 200).toFixed(0);
+                const randomRotate = Math.random() * 1080 - 540; // Increased rotation
+                
+                letter.style.setProperty('--x', randomX + 'px');
+                letter.style.setProperty('--y', randomY + 'px');
+                letter.style.setProperty('--rotate', randomRotate + 'deg');
+            });
+
+            logo.classList.add('scatter');
+
+            setTimeout(() => {
+                logo.classList.remove('scatter');
+                letters.forEach(letter => {
+                    letter.style.removeProperty('--x');
+                    letter.style.removeProperty('--y');
+                    letter.style.removeProperty('--rotate');
+                });
+            }, 1200); // Slightly longer scatter duration
+        }
+
+        logo.addEventListener('click', scatterLetters);
+
+        // Header movement effect on scroll
+        const header = document.getElementById('mainHeader');
+        window.addEventListener('scroll', () => {
+            const scrollPercent = (window.scrollY / (document.body.offsetHeight - window.innerHeight)) * 100;
+            // Subtle vertical float and scale based on scroll
+            header.style.transform = `translateY(${Math.min(20, scrollPercent / 5)}px) scale(${1 - Math.min(0.05, scrollPercent / 2000)})`;
+        });
+
+        // Floating particles generation
+        const particleContainer = document.getElementById('particleContainer');
+        function createParticles(num) {
+            for (let i = 0; i < num; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
                 
-                letter.style.setProperty('--x', randomX + 'px');
-                letter.style.setProperty('--y', randomY + 'px');
-                letter.style.setProperty('--rotate', randomRotate + 'deg');
-            });
-
-            logo.classList.add('scatter');
-
-            setTimeout(() => {
-                logo.classList.remove('scatter');
-                letters.forEach(letter => {
-                    letter.style.removeProperty('--x');
-                    letter.style.removeProperty('--y');
-                    letter.style.removeProperty('--rotate');
-                });
-            }, 1000);
+                // Randomize position, size, and animation parameters
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh'; // Start position (though animation overrides it)
+                
+                const size = Math.random() * 6 + 2 + 'px';
+                particle.style.width = size;
+                particle.style.height = size;
+                
+                const duration = Math.random() * 10 + 5 + 's';
+                particle.style.animationDuration = duration;
+                
+                // Opacity varies with depth/size
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                particleContainer.appendChild(particle);
+            }
         }
+        createParticles(40); // Generate particles
 
-        logo.addEventListener('click', scatterLetters);
-    </script>
+    </script>
 </body>
 </html>
